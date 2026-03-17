@@ -1,0 +1,23 @@
+{
+  "name": "vouch-bot",
+  "version": "1.0.0",
+  "type": "module",
+  "engines": {
+    "node": "20"
+  },
+  "scripts": {
+    "start": "node --loader ts-node/esm src/bot.ts"
+  },
+  "dependencies": {
+    "discord.js": "^14.18.0",
+    "drizzle-orm": "^0.45.1",
+    "pg": "^8.20.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.0",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/pg": "^8.18.0"
+  }
+}
