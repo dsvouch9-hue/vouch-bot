@@ -1,3 +1,4 @@
+import { createServer } from "http";
 import {
   Client,
   GatewayIntentBits,
@@ -535,8 +536,30 @@ setInterval(async () => {
   }
 }, 6 * 60 * 60 * 1000);
 
+// ── Keep-alive HTTP server (required for Render free web service) ──────────
+const PORT = process.env.PORT || 3000;
+
+const server = createServer((req, res) => {
+  res.writeHead(200, { "Content-Type": "text/plain" });
+  res.end("✅ Vouch Bot is running!");
+});
+
+server.listen(PORT, () => {
+  console.log(`✅ Keep-alive server running on port ${PORT}`);
+});
+
+// Self-ping every 14 minutes so Render never spins us down
+const RENDER_URL = process.env.RENDER_EXTERNAL_URL;
+if (RENDER_URL) {
+  setInterval(() => {
+    fetch(RENDER_URL)
+      .then(() => console.log("✅ Self-ping successful"))
+      .catch((e) => console.error("Self-ping failed:", e));
+  }, 14 * 60 * 1000);
+}
+
 // ── Start ──────────────────────────────────────────────────────────────────
 client.login(token).catch((err) => {
   console.error("❌ Login failed:", err);
   process.exit(1);
-});
+}); 
