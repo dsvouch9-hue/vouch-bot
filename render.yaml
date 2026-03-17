@@ -1,9 +1,10 @@
 services:
-  - type: worker
+  - type: web
     name: vouch-bot
     runtime: node
     buildCommand: npm install
     startCommand: npm start
+    plan: free
     envVars:
       - key: DISCORD_TOKEN
         sync: false
@@ -11,7 +12,8 @@ services:
         fromDatabase:
           name: vouch-db
           property: connectionString
-    plan: free
+      - key: PORT
+        value: 3000
 
 databases:
   - name: vouch-db
